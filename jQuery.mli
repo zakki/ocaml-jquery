@@ -118,6 +118,46 @@ class type jQuery = object
   method tableFilterApplyFilterValues : unit meth
 end
 
+class type ajaxSettings = object
+  method accepts : 'a optdef_prop
+  method async : bool t optdef_prop
+  method beforeSend :
+    (#XmlHttpRequest.xmlHttpRequest t -> ajaxSettings t -> 'a) callback optdef_prop
+  method cache : bool t optdef_prop
+  method complete :
+    (#XmlHttpRequest.xmlHttpRequest t -> js_string t -> 'a) callback optdef_prop
+  method contents : 'a optdef_prop
+  method contentType  : js_string t optdef_prop
+  method context : 'a optdef_prop
+  method converters : 'a optdef_prop
+  method crossDomain : bool t optdef_prop
+  method data : 'a optdef_prop
+  method dataFilter : ('a -> js_string t -> 'b) callback optdef_prop
+  method dataType : js_string t optdef_prop
+  method error :
+    (#XmlHttpRequest.xmlHttpRequest t -> js_string t -> 'a -> 'b) callback optdef_prop
+  method global : bool t optdef_prop
+  method headers : 'a optdef_prop
+  method ifModified : bool t optdef_prop
+  method isLocal : bool t optdef_prop
+  method jsonp : js_string t optdef_prop
+  (* method jsonpCallback  : js_string t optdef_prop, function optdef_prop *)
+  method mimeType : js_string t optdef_prop
+  method password  : js_string t optdef_prop
+  method processData : bool t optdef_prop
+  method scriptCharset  : js_string t optdef_prop
+  method statusCode : 'a optdef_prop
+  method success :
+    ('a -> js_string t -> #XmlHttpRequest.xmlHttpRequest t -> 'b) callback optdef_prop
+  method timeout : float_prop
+  method traditional: bool t optdef_prop
+  method _type  : js_string t optdef_prop
+  method url : js_string t optdef_prop
+  method username  : js_string t optdef_prop
+  method xhr : ('a -> 'b) callback optdef_prop
+  method xhrFields : 'a optdef_prop
+end
+
 (** Easy way to call the jQuery object jQ "#foo" <=> $("#foo") **)
 val jQ : string -> jQuery t
 
@@ -130,3 +170,6 @@ val jQuery : (js_string t, #Dom_html.element t, #Dom_html.element t js_array t,
 
 val ajax : js_string t -> unit
 val param : Unsafe.any t -> bool t opt -> js_string t
+
+val new_ajax_setting : unit -> ajaxSettings t
+val ajax_setting : ajaxSettings t -> unit

@@ -215,6 +215,46 @@ class type jQuery = object
   method wrapInner*)
 end
 
+class type ajaxSettings = object
+  method accepts : 'a optdef_prop
+  method async : bool t optdef_prop
+  method beforeSend :
+    (#XmlHttpRequest.xmlHttpRequest t -> ajaxSettings t -> 'a) callback optdef_prop
+  method cache : bool t optdef_prop
+  method complete :
+    (#XmlHttpRequest.xmlHttpRequest t -> js_string t -> 'a) callback optdef_prop
+  method contents : 'a optdef_prop
+  method contentType  : js_string t optdef_prop
+  method context : 'a optdef_prop
+  method converters : 'a optdef_prop
+  method crossDomain : bool t optdef_prop
+  method data : 'a optdef_prop
+  method dataFilter : ('a -> js_string t -> 'b) callback optdef_prop
+  method dataType : js_string t optdef_prop
+  method error :
+    (#XmlHttpRequest.xmlHttpRequest t -> js_string t -> 'a -> 'b) callback optdef_prop
+  method global : bool t optdef_prop
+  method headers : 'a optdef_prop
+  method ifModified : bool t optdef_prop
+  method isLocal : bool t optdef_prop
+  method jsonp : js_string t optdef_prop
+  (* method jsonpCallback  : js_string t optdef_prop, function optdef_prop *)
+  method mimeType : js_string t optdef_prop
+  method password  : js_string t optdef_prop
+  method processData : bool t optdef_prop
+  method scriptCharset  : js_string t optdef_prop
+  method statusCode : 'a optdef_prop
+  method success :
+    ('a -> js_string t -> #XmlHttpRequest.xmlHttpRequest t -> 'b) callback optdef_prop
+  method timeout : float_prop
+  method traditional: bool t optdef_prop
+  method _type  : js_string t optdef_prop
+  method url : js_string t optdef_prop
+  method username  : js_string t optdef_prop
+  method xhr : ('a -> 'b) callback optdef_prop
+  method xhrFields : 'a optdef_prop
+end
+
 let jQ s = Unsafe.fun_call 
   (Unsafe.variable "jQuery") [|Unsafe.inject (Js.string s)|]
 
@@ -319,3 +359,12 @@ let type_ = Unsafe.variable "jQuery.type"
 let unique = Unsafe.variable "jQuery.unique"
 let when_ = Unsafe.variable "jQuery.when"
 *)
+
+let ajax_setting opt =
+  Unsafe.meth_call
+    (Unsafe.variable "jQuery") "ajax"
+    [|Unsafe.inject opt|]
+
+let new_ajax_setting () =
+  let jobject = Unsafe.variable "Object" in
+  jsnew jobject ()
